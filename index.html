@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Tugas Grafika Komputer 1
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
+</head>
+
+<body>
+
+  <main class="app">
+    <header>
+      <h1>
+        Solar System
+      </h1>
+
+      <p>
+        Muhammad Abid Baihaqi Alfarizi (5025241)
+        Akmal Yusuf (5025241212)
+      </p>
+    </header>
+
+    <canvas
+      id="glCanvas"
+      width="600"
+      height="900">
+    </canvas>
+
+    <section id="hud">
+      <div>
+        Position:
+        <span id="positionInfo"></span>
+      </div>
+
+      <div>
+        Rotation:
+        <span id="rotationInfo"></span>
+      </div>
+
+      <div>
+        Scale:
+        <span id="scaleInfo"></span>
+      </div>
+
+      <div>
+        Order:
+        <span id="orderInfo">
+          Scale → Rotate → Translate
+        </span>
+      </div>
+    </section>
+
+    <section class="controls">
+      <strong>Kontrol:</strong>
+
+      <span>
+        R = Reset
+      </span>
+    </section>
+  </main>
+
+  <script
+    type="module"
+    src="./main.js">
+  </script>
+
+</body>
+</html>
