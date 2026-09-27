@@ -407,7 +407,7 @@ curve([["M",92,424],["C",113,422,136,412,154,407]], 3, "#ffe87c", 1, 0.8);
 ellipse(240,424,16,23,"#20201c",0.12,0.24);
 ellipse(285,465,37,28,COLORS.pink,-0.25,1.05);
 
-// H. Dua telur di kanan bawah, dengan bentuk menyempit di ujung atas.
+// H. Dua telur di kanan bawah
 function drawEgg(cx, cy, rx, ry, rotation, fill) {
     const eggPath = [
         ["M",0,-1], ["C",0.55,-1.05,0.91,-0.35,1,0.2],
