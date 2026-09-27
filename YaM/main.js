@@ -297,13 +297,6 @@ function curve(commands, width, color, texture = 1, alpha = 1) {
 // A. Dua awan biru.
 paintPath(PATHS.cloudLeft, COLORS.cloud, COLORS.blue, 8, 1.3);
 paintPath(PATHS.cloudRight, COLORS.cloud, COLORS.blue, 7, 1.3);
-curve([["M", 106, 153], ["C", 101, 166, 101, 175, 106, 185]], 5, COLORS.blue, 1.2, 0.75);
-curve([["M", 186, 116], ["C", 176, 130, 168, 142, 163, 155]], 5, COLORS.blue, 1.2, 0.70);
-curve([["M", 174, 192], ["C", 179, 180, 186, 166, 195, 157]], 5, COLORS.blue, 1.2, 0.65);
-curve([["M", 258, 135], ["C", 256, 151, 252, 166, 247, 178]], 5, COLORS.blue, 1.2, 0.65);
-curve([["M", 539, 377], ["C", 534, 389, 537, 400, 544, 407]], 4, COLORS.blue, 1.2, 0.60);
-curve([["M", 600, 352], ["C", 594, 364, 589, 375, 586, 386]], 4, COLORS.blue, 1.2, 0.55);
-curve([["M", 659, 366], ["C", 654, 381, 646, 392, 641, 403]], 4, COLORS.blue, 1.2, 0.65);
 
 // B. Matahari dan sembilan garis sinarnya.
 const sunRays = [
@@ -362,14 +355,7 @@ const feet = [
 ];
 feet.forEach(points => stroke(points, 12, COLORS.foot, false, 1.1));
 paintPath(PATHS.tail, COLORS.orange, "#f28b1e", 7, 0.95);
-curve([["M",579,558],["C",600,550,617,536,637,532]], 5, "#ef821a");
-curve([["M",590,592],["C",614,583,641,579,659,583]], 5, "#ec7e1a");
-curve([["M",573,527],["C",593,497,604,485,618,481]], 3, "#ffe4a4", 1, 0.8);
-curve([["M",614,547],["C",638,530,654,525,666,530]], 3, "#ffe4a4", 1, 0.8);
-curve([["M",621,608],["C",645,594,660,590,672,594]], 3, "#ffe4a4", 1, 0.8);
 paintPath(PATHS.comb, COLORS.red, "#de342b", 6, 1.05);
-curve([["M",274,278],["C",272,291,274,304,277,311]], 5, "#d72e25", 1, 0.6);
-curve([["M",347,276],["C",341,290,336,302,336,314]], 4, "#d72e25", 1, 0.6);
 
 // F. Siluet badan putih dengan outline cokelat.
 paintPath(PATHS.body, COLORS.body, COLORS.outline, 10, 0.75);
@@ -400,10 +386,7 @@ creamStrokes.forEach((path,i) => curve(path, 6 + i % 5, COLORS.cream, 1.5, 0.6))
 // G. Sayap, paruh, pial merah, mata, dan pipi.
 paintPath(PATHS.wing, null, COLORS.outline, 8, 0.85);
 paintPath(PATHS.wattle, COLORS.red, "#e43228", 5, 1.1);
-curve([["M",139,482],["C",123,501,111,519,108,532]], 3, "#ffad95", 1, 0.65);
-curve([["M",156,492],["C",159,512,161,531,170,537]], 3, "#ffad95", 1, 0.65);
 paintPath(PATHS.beak, COLORS.yellow, "#f5ad07", 7, 0.9);
-curve([["M",92,424],["C",113,422,136,412,154,407]], 3, "#ffe87c", 1, 0.8);
 ellipse(240,424,16,23,"#20201c",0.12,0.24);
 ellipse(285,465,37,28,COLORS.pink,-0.25,1.05);
 
