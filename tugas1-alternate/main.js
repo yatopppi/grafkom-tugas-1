@@ -7,8 +7,9 @@ const COLORS = {
   black: [0.08, 0.075, 0.065, 1],
   yellow: [1.0, 0.93, 0.02, 1],
   cyan: [0.25, 0.86, 0.82, 1],
-  blue: [0.08, 0.64, 0.91, 1],
-  planetBlue: [0.12, 0.68, 0.91, 1],
+  blue: [0.08, 0.8, 0.99, 1],
+  planetBlue: [0.12, 0.8, 0.99, 1],
+  highBlue: [0.12, 0.59, 0.94, 1],
   red: [0.96, 0.22, 0.28, 1],
   orange: [1.0, 0.66, 0.16, 1],
   darkOrange: [0.78, 0.23, 0.12, 1],
@@ -23,11 +24,11 @@ const STAR_DATA = [
   { type: "star", x: 0.82, y: 0.58, radius: 0.13, rotation: 88, scaleX: 0.96, scaleY: 1.0, color: COLORS.yellow },
 ];
 
-function createOutlinedStar({ type, x, y, radius, rotation, scaleX, scaleY, color }) {
+function createOutlinedStar({ type, x, y, radius, radiusOutline, rotation, scaleX, scaleY, color }) {
   const starGroup = renderer.group({ x, y, rotation, scaleX, scaleY });
   const createStar = type === "star4" ? renderer.star4 : renderer.star;
   starGroup.add(
-    createStar({ radius, color: COLORS.black }),
+    createStar({ radius: radius + 0.05, color: COLORS.black }),
     createStar({ radius: Math.max(0.01, radius - 0.018), color})
   );
   return starGroup;
@@ -87,13 +88,13 @@ function createOutlinedTriangle({ x, y, width, height, rotation, fillColor }) {
 const rocket = renderer.group({ x: 0, y: 0.13, rotation: 0 });
 
 const leftFin = createOutlinedPolygon({
-  x: -0.40, y: -0.5, fillColor: COLORS.red, innerScaleX: 0.86, innerScaleY: 0.88,
-  points: [[0.14, 0.6], [-0.15, 0.16], [-0.14, -0.3], [0.14, -0.05]],
+  x: -0.40, y: -0.5, fillColor: COLORS.red, innerScaleX: 0.90, innerScaleY: 0.88,
+  points: [[0.14, 0.6], [-0.15, 0.16], [-0.2, -0.05],[-0.14, -0.3], [0.14, -0.05]],
 });
 
 const rightFin = createOutlinedPolygon({
-  x: 0.40, y: -0.5, fillColor: COLORS.red, innerScaleX: 0.86, innerScaleY: 0.88,
-  points: [[-0.14, 0.6], [0.15, 0.16], [0.14, -0.3], [-0.14, -0.05]],
+  x: 0.40, y: -0.5, fillColor: COLORS.red, innerScaleX: 0.90, innerScaleY: 0.88,
+  points: [[-0.14, 0.6], [0.15, 0.16], [0.2, -0.05], [0.14, -0.3], [-0.14, -0.05]],
 });
 
 const flameLeft = createOutlinedTriangle({ x: -0.16, y: -0.96, width: 0.23, height: 0.40, rotation: 170, fillColor: COLORS.yellow });
@@ -126,7 +127,7 @@ centerFin.add(
 );
 
 const rocketBand = createOutlinedPolygon({
-  x: 0, y: -0.75, fillColor: COLORS.blue, innerScaleX: 0.88, innerScaleY: 0.72,
+  x: 0, y: -0.75, fillColor: COLORS.highBlue, innerScaleX: 0.88, innerScaleY: 0.72,
   points: [[-0.31, 0.09], [0.31, 0.09], [0.23, -0.09], [-0.23, -0.09]],
 });
 
