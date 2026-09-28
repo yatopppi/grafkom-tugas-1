@@ -96,18 +96,18 @@ const rightFin = createOutlinedPolygon({
   points: [[-0.14, 0.30], [0.10, 0.16], [0.23, -0.22], [0.08, -0.25], [-0.14, -0.05]],
 });
 
-const flameLeft = createOutlinedTriangle({ x: -0.13, y: -0.90, width: 0.23, height: 0.40, rotation: 170, fillColor: COLORS.yellow });
-const flameCenter = createOutlinedTriangle({ x: 0, y: -0.94, width: 0.25, height: 0.48, rotation: 180, fillColor: COLORS.yellow });
-const flameRight = createOutlinedTriangle({ x: 0.13, y: -0.90, width: 0.23, height: 0.40, rotation: 190, fillColor: COLORS.yellow });
+const flameLeft = createOutlinedTriangle({ x: -0.16, y: -0.96, width: 0.23, height: 0.40, rotation: 170, fillColor: COLORS.yellow });
+const flameCenter = createOutlinedTriangle({ x: 0, y: -0.96, width: 0.25, height: 0.48, rotation: 180, fillColor: COLORS.yellow });
+const flameRight = createOutlinedTriangle({ x: 0.16, y: -0.96, width: 0.23, height: 0.40, rotation: 190, fillColor: COLORS.yellow });
 
 const rocketBody = createOutlinedPolygon({
   fillColor: COLORS.white, innerScaleX: 0.94, innerScaleY: 0.965,
-  points: [[0.00, 0.88], [-0.20, 0.65], [-0.36, 0.28], [-0.44, -0.34], [-0.30, -0.68], [0.30, -0.68], [0.44, -0.34], [0.36, 0.28], [0.20, 0.65]],
+  points: [[-0.19, 0.63], [-0.36, 0.28], [-0.44, -0.34], [-0.30, -0.68], [0.30, -0.68], [0.44, -0.34], [0.36, 0.28], [0.19, 0.63]],
 });
 
 const rocketNose = createOutlinedPolygon({
-  x: 0, y: 0.61, fillColor: COLORS.red, innerScaleX: 0.88, innerScaleY: 0.87,
-  points: [[0.00, 0.27], [-0.27, -0.13], [0.27, -0.13]],
+  x: 0, y: 0.65, fillColor: COLORS.red, innerScaleX: 0.88, innerScaleY: 0.87,
+  points: [[0.00, 0.27], [-0.24, -0.1], [0.24, -0.1]],
 });
 
 const rocketWindow = renderer.group({ x: 0, y: 0.18 });
@@ -119,7 +119,7 @@ rocketWindow.add(
   renderer.arc({ x: -0.015, y: 0.01, radiusX: 0.095, radiusY: 0.095, thickness: 0.012, startAngle: 105, endAngle: 145, color: COLORS.white})
 );
 
-const centerFin = renderer.group({ x: 0, y: -0.37, rotation: -8 });
+const centerFin = renderer.group({ x: 0, y: -0.5, rotation: 0 });
 centerFin.add(
   renderer.ellipse({ radiusX: 0.075, radiusY: 0.27, color: COLORS.black}),
   renderer.ellipse({ radiusX: 0.050, radiusY: 0.235, color: COLORS.red })
@@ -130,7 +130,7 @@ const rocketBand = createOutlinedPolygon({
   points: [[-0.31, 0.09], [0.31, 0.09], [0.23, -0.09], [-0.23, -0.09]],
 });
 
-rocket.add(leftFin, rightFin, flameLeft, flameCenter, flameRight, rocketBody, rocketNose, rocketWindow, centerFin, rocketBand);
+rocket.add(leftFin, rightFin, flameLeft, flameCenter, flameRight, rocketBody, rocketNose, rocketWindow, rocketBand, centerFin);
 
 renderer.add(...stars, rocket, planetBiru, planetOranye);
 renderer.render();
