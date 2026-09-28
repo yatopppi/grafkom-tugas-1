@@ -87,13 +87,13 @@ function createOutlinedTriangle({ x, y, width, height, rotation, fillColor }) {
 const rocket = renderer.group({ x: 0, y: 0.13, rotation: 0 });
 
 const leftFin = createOutlinedPolygon({
-  x: -0.40, y: -0.28, fillColor: COLORS.red, innerScaleX: 0.86, innerScaleY: 0.88,
-  points: [[0.14, 0.30], [-0.10, 0.16], [-0.23, -0.22], [-0.08, -0.25], [0.14, -0.05]],
+  x: -0.40, y: -0.5, fillColor: COLORS.red, innerScaleX: 0.86, innerScaleY: 0.88,
+  points: [[0.14, 0.6], [-0.15, 0.16], [-0.23, -0.22], [0.14, -0.05]],
 });
 
 const rightFin = createOutlinedPolygon({
-  x: 0.40, y: -0.28, fillColor: COLORS.red, innerScaleX: 0.86, innerScaleY: 0.88,
-  points: [[-0.14, 0.30], [0.10, 0.16], [0.23, -0.22], [0.08, -0.25], [-0.14, -0.05]],
+  x: 0.40, y: -0.5, fillColor: COLORS.red, innerScaleX: 0.86, innerScaleY: 0.88,
+  points: [[-0.14, 0.6], [0.15, 0.16], [0.23, -0.22], [-0.14, -0.05]],
 });
 
 const flameLeft = createOutlinedTriangle({ x: -0.16, y: -0.96, width: 0.23, height: 0.40, rotation: 170, fillColor: COLORS.yellow });
@@ -131,6 +131,8 @@ const rocketBand = createOutlinedPolygon({
 });
 
 rocket.add(leftFin, rightFin, flameLeft, flameCenter, flameRight, rocketBody, rocketNose, rocketWindow, rocketBand, centerFin);
+// rocket.add(leftFin);
+
 
 renderer.add(...stars, rocket, planetBiru, planetOranye);
 renderer.render();
