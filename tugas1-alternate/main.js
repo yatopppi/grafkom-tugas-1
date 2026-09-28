@@ -43,7 +43,7 @@ planetBiru.add(
   renderer.circle({ radius: 0.19, color: COLORS.planetBlue}),
   renderer.arc({ x: -0.025, y: 0.02, radiusX: 0.135, radiusY: 0.135, thickness: 0.014, startAngle: 105, endAngle: 148, color: COLORS.white }),
   renderer.circle({ x: -0.11, y: 0.005, radius: 0.023, color: COLORS.black}),
-  renderer.circle({ x: 0.10, y: 0.08, radius: 0.022, color: COLORS.black}),
+  renderer.circle({ x: 0.10, y: 0.002, radius: 0.022, color: COLORS.black}),
   renderer.circle({ x: 0.05, y: -0.13, radius: 0.019, color: COLORS.black}),
   renderer.arc({ radiusX: 0.34, radiusY: 0.105, thickness: 0.045, startAngle: 188, endAngle: 354, color: COLORS.black}),
   renderer.arc({ radiusX: 0.34, radiusY: 0.105, thickness: 0.023, startAngle: 188, endAngle: 354, color: COLORS.red})
@@ -56,12 +56,12 @@ planetOranye.add(
   renderer.circle({ radius: 0.22, color: COLORS.black}),
   renderer.circle({ radius: 0.19, color: COLORS.orange}),
   renderer.arc({ x: -0.025, y: 0.015, radiusX: 0.14, radiusY: 0.14, thickness: 0.014, startAngle: 105, endAngle: 150, color: COLORS.white}),
-  renderer.circle({ x: 0.008, y: 0.17, radius: 0.021, color: COLORS.black}),
-  renderer.circle({ x: 0.105, y: 0.08, radius: 0.026, color: COLORS.black}),
+  renderer.circle({ x: 0.008, y: 0.14, radius: 0.021, color: COLORS.black}),
+  renderer.circle({ x: 0.105, y: 0.05, radius: 0.026, color: COLORS.black}),
   renderer.circle({ x: -0.12, y: 0.035, radius: 0.022, color: COLORS.black}),
   renderer.circle({ x: -0.105, y: -0.13, radius: 0.023, color: COLORS.darkOrange}),
   renderer.circle({ x: 0.105, y: -0.125, radius: 0.025, color: COLORS.darkOrange}),
-  renderer.arc({ x: 0, y: -0.005, radiusX: 0.060, radiusY: 0.060, thickness: 0.014, startAngle: 190, endAngle: 350, color: COLORS.black}),
+  renderer.arc({ x: 0, y: -0.005, radiusX: 0.04, radiusY: 0.08, thickness: 0.014, startAngle: 190, endAngle: 350, color: COLORS.black}),
   renderer.arc({ radiusX: 0.34, radiusY: 0.10, thickness: 0.044, startAngle: 188, endAngle: 354, color: COLORS.black}),
   renderer.arc({ radiusX: 0.34, radiusY: 0.10, thickness: 0.020, startAngle: 188, endAngle: 354, color: COLORS.black})
 );
@@ -88,12 +88,12 @@ const rocket = renderer.group({ x: 0, y: 0.13, rotation: 0 });
 
 const leftFin = createOutlinedPolygon({
   x: -0.40, y: -0.5, fillColor: COLORS.red, innerScaleX: 0.86, innerScaleY: 0.88,
-  points: [[0.14, 0.6], [-0.15, 0.16], [-0.23, -0.22], [0.14, -0.05]],
+  points: [[0.14, 0.6], [-0.15, 0.16], [-0.14, -0.3], [0.14, -0.05]],
 });
 
 const rightFin = createOutlinedPolygon({
   x: 0.40, y: -0.5, fillColor: COLORS.red, innerScaleX: 0.86, innerScaleY: 0.88,
-  points: [[-0.14, 0.6], [0.15, 0.16], [0.23, -0.22], [-0.14, -0.05]],
+  points: [[-0.14, 0.6], [0.15, 0.16], [0.14, -0.3], [-0.14, -0.05]],
 });
 
 const flameLeft = createOutlinedTriangle({ x: -0.16, y: -0.96, width: 0.23, height: 0.40, rotation: 170, fillColor: COLORS.yellow });
@@ -121,8 +121,8 @@ rocketWindow.add(
 
 const centerFin = renderer.group({ x: 0, y: -0.5, rotation: 0 });
 centerFin.add(
-  renderer.ellipse({ radiusX: 0.075, radiusY: 0.27, color: COLORS.black}),
-  renderer.ellipse({ radiusX: 0.050, radiusY: 0.235, color: COLORS.red })
+  renderer.ellipse({ radiusX: 0.065, radiusY: 0.25, color: COLORS.black}),
+  renderer.ellipse({ radiusX: 0.040, radiusY: 0.215, color: COLORS.red })
 );
 
 const rocketBand = createOutlinedPolygon({
