@@ -13,6 +13,7 @@ const COLORS = {
   orange: [1.0, 0.66, 0.16, 1],
   darkOrange: [0.78, 0.23, 0.12, 1],
   white: [1, 1, 1, 1],
+  gray: [0.8, 0.8, 0.8, 1],
 };
 
 const STAR_DATA = [
@@ -112,7 +113,7 @@ const rocketNose = createOutlinedPolygon({
 const rocketWindow = renderer.group({ x: 0, y: 0.18 });
 rocketWindow.add(
   renderer.circle({ radius: 0.215, color: COLORS.black}),
-  renderer.circle({ radius: 0.183, color: COLORS.cyan}),
+  renderer.circle({ radius: 0.183, color: COLORS.gray}),
   renderer.circle({ radius: 0.157, color: COLORS.black}),
   renderer.circle({ radius: 0.132, color: COLORS.blue}),
   renderer.arc({ x: -0.015, y: 0.01, radiusX: 0.095, radiusY: 0.095, thickness: 0.012, startAngle: 105, endAngle: 145, color: COLORS.white})
@@ -125,7 +126,7 @@ centerFin.add(
 );
 
 const rocketBand = createOutlinedPolygon({
-  x: 0, y: -0.69, fillColor: COLORS.blue, innerScaleX: 0.88, innerScaleY: 0.72,
+  x: 0, y: -0.75, fillColor: COLORS.blue, innerScaleX: 0.88, innerScaleY: 0.72,
   points: [[-0.31, 0.09], [0.31, 0.09], [0.23, -0.09], [-0.23, -0.09]],
 });
 
