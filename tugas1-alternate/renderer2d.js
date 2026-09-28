@@ -2,38 +2,28 @@ import { Mat3 } from "./matrix3.js";
 
 const vertexShaderSource = `#version 300 es
 in vec2 a_position;
+
 uniform mat3 u_matrix;
-out vec2 v_localPosition;
 
 void main() {
-  vec3 position = u_matrix * vec3(a_position, 1.0);
-  gl_Position = vec4(position.xy, 0.0, 1.0);
-  v_localPosition = a_position;
+  vec3 position =
+    u_matrix *
+    vec3(a_position, 1.0);
+
+  gl_Position =
+    vec4(position.xy, 0.0, 1.0);
 }
 `;
 
 const fragmentShaderSource = `#version 300 es
 precision highp float;
 
-in vec2 v_localPosition;
 uniform vec4 u_color;
-uniform float u_texture;
+
 out vec4 outColor;
 
-float randomNoise(vec2 position) {
-  return fract(sin(dot(position, vec2(12.9898, 78.233))) * 43758.5453);
-}
-
 void main() {
-  vec2 textureCoordinate = floor(v_localPosition * 650.0);
-  float noise = randomNoise(textureCoordinate + floor(gl_FragCoord.xy * 0.12));
-  float colorVariation = (noise - 0.5) * 0.14 * u_texture;
-  float whiteFleck = smoothstep(0.88, 1.0, noise) * 0.38 * u_texture;
-  
-  vec3 color = u_color.rgb + colorVariation;
-  color = mix(color, vec3(1.0), whiteFleck);
-  
-  outColor = vec4(clamp(color, 0.0, 1.0), u_color.a);
+  outColor = u_color;
 }
 `;
 
@@ -82,7 +72,7 @@ export function createRenderer2D(canvas) {
   const positionLocation = gl.getAttribLocation(program, "a_position");
   const matrixLocation = gl.getUniformLocation(program, "u_matrix");
   const colorLocation = gl.getUniformLocation(program, "u_color");
-  const textureLocation = gl.getUniformLocation(program, "u_texture");
+  // const textureLocation = gl.getUniformLocation(program, "u_texture");
 
   function createMesh(positions) {
     const buffer = gl.createBuffer();
@@ -173,8 +163,8 @@ export function createRenderer2D(canvas) {
   const arcMeshCache = new Map();
   const scene = [];
 
-  function createObject(mesh, { x = 0, y = 0, scaleX = 1, scaleY = 1, rotation = 0, color = [1, 1, 1, 1], texture = 0.12 } = {}) {
-    return { mesh, x, y, scaleX, scaleY, rotation, color: new Float32Array(color), texture };
+  function createObject(mesh, { x = 0, y = 0, scaleX = 1, scaleY = 1, rotation = 0, color = [1, 1, 1, 1] } = {}) {
+    return { mesh, x, y, scaleX, scaleY, rotation, color: new Float32Array(color)};
   }
 
   function group({ x = 0, y = 0, rotation = 0, scaleX = 1, scaleY = 1 } = {}) {
@@ -185,35 +175,35 @@ export function createRenderer2D(canvas) {
     };
   }
 
-  function rectangle({ x = 0, y = 0, width = 1, height = 1, rotation = 0, color, texture = 0.12 } = {}) {
-    return createObject(squareMesh, { x, y, scaleX: width, scaleY: height, rotation, color, texture });
+  function rectangle({ x = 0, y = 0, width = 1, height = 1, rotation = 0, color} = {}) {
+    return createObject(squareMesh, { x, y, scaleX: width, scaleY: height, rotation, color });
   }
 
-  function triangle({ x = 0, y = 0, width = 1, height = 1, rotation = 0, color, texture = 0.12 } = {}) {
-    return createObject(triangleMesh, { x, y, scaleX: width, scaleY: height, rotation, color, texture });
+  function triangle({ x = 0, y = 0, width = 1, height = 1, rotation = 0, color } = {}) {
+    return createObject(triangleMesh, { x, y, scaleX: width, scaleY: height, rotation, color });
   }
 
-  function polygon({ points, x = 0, y = 0, scaleX = 1, scaleY = 1, rotation = 0, color, texture = 0.12 } = {}) {
-    return createObject(createPolygonMesh(points), { x, y, scaleX, scaleY, rotation, color, texture });
+  function polygon({ points, x = 0, y = 0, scaleX = 1, scaleY = 1, rotation = 0, color } = {}) {
+    return createObject(createPolygonMesh(points), { x, y, scaleX, scaleY, rotation, color });
   }
 
-  function circle({ x = 0, y = 0, radius = 0.5, color, texture = 0.12 } = {}) {
-    return createObject(circleMesh, { x, y, scaleX: radius, scaleY: radius, color, texture });
+  function circle({ x = 0, y = 0, radius = 0.5, color} = {}) {
+    return createObject(circleMesh, { x, y, scaleX: radius, scaleY: radius, color });
   }
 
-  function ellipse({ x = 0, y = 0, radiusX = 0.5, radiusY = 0.25, rotation = 0, color, texture = 0.12 } = {}) {
-    return createObject(circleMesh, { x, y, scaleX: radiusX, scaleY: radiusY, rotation, color, texture });
+  function ellipse({ x = 0, y = 0, radiusX = 0.5, radiusY = 0.25, rotation = 0, color } = {}) {
+    return createObject(circleMesh, { x, y, scaleX: radiusX, scaleY: radiusY, rotation, color });
   }
 
-  function star({ x = 0, y = 0, radius = 0.5, rotation = 0, color, texture = 0.12 } = {}) {
-    return createObject(starMesh, { x, y, scaleX: radius, scaleY: radius, rotation, color, texture });
+  function star({ x = 0, y = 0, radius = 0.5, rotation = 0, color } = {}) {
+    return createObject(starMesh, { x, y, scaleX: radius, scaleY: radius, rotation, color });
   }
 
-  function star4({ x = 0, y = 0, radius = 0.5, rotation = 0, color, texture = 0.12 } = {}) {
-    return createObject(starMesh4, { x, y, scaleX: radius, scaleY: radius, rotation, color, texture });
+  function star4({ x = 0, y = 0, radius = 0.5, rotation = 0, color } = {}) {
+    return createObject(starMesh4, { x, y, scaleX: radius, scaleY: radius, rotation, color });
   }
 
-  function arc({ x = 0, y = 0, radiusX = 0.5, radiusY = 0.25, thickness = 0.02, startAngle = 0, endAngle = 180, rotation = 0, color, texture = 0.05, segments } = {}) {
+  function arc({ x = 0, y = 0, radiusX = 0.5, radiusY = 0.25, thickness = 0.02, startAngle = 0, endAngle = 180, rotation = 0, color, segments } = {}) {
     const angleRange = Math.abs(endAngle - startAngle);
     const actualSegments = segments ?? Math.max(12, Math.ceil((angleRange / 360) * 80));
     const cacheKey = `${radiusX}:${radiusY}:${thickness}:${startAngle}:${endAngle}:${actualSegments}`;
@@ -223,11 +213,11 @@ export function createRenderer2D(canvas) {
       mesh = createArcMesh({ radiusX, radiusY, thickness, startAngle, endAngle, segments: actualSegments });
       arcMeshCache.set(cacheKey, mesh);
     }
-    return createObject(mesh, { x, y, rotation, color, texture });
+    return createObject(mesh, { x, y, rotation, color });
   }
 
-  function ring({ x = 0, y = 0, radiusX = 0.5, radiusY = 0.25, thickness = 0.02, rotation = 0, color, texture = 0.05, segments = 80 } = {}) {
-    return arc({ x, y, radiusX, radiusY, thickness, startAngle: 0, endAngle: 360, rotation, color, texture, segments });
+  function ring({ x = 0, y = 0, radiusX = 0.5, radiusY = 0.25, thickness = 0.02, rotation = 0, color, segments = 80 } = {}) {
+    return arc({ x, y, radiusX, radiusY, thickness, startAngle: 0, endAngle: 360, rotation, color, segments });
   }
 
   function createModelMatrix(object) {
@@ -247,7 +237,7 @@ export function createRenderer2D(canvas) {
 
       gl.uniformMatrix3fv(matrixLocation, false, worldMatrix);
       gl.uniform4fv(colorLocation, object.color);
-      gl.uniform1f(textureLocation, object.texture);
+      // gl.uniform1f(textureLocation, object.texture);
       gl.drawArrays(gl.TRIANGLES, 0, object.mesh.vertexCount);
     }
 
