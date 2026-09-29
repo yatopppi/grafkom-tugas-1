@@ -72,8 +72,6 @@ export function createRenderer2D(canvas) {
   const positionLocation = gl.getAttribLocation(program, "a_position");
   const matrixLocation = gl.getUniformLocation(program, "u_matrix");
   const colorLocation = gl.getUniformLocation(program, "u_color");
-  // const textureLocation = gl.getUniformLocation(program, "u_texture");
-
 
   // function buat mesh secara umum
   function createMesh(positions) {
@@ -271,7 +269,6 @@ export function createRenderer2D(canvas) {
 
       gl.uniformMatrix3fv(matrixLocation, false, worldMatrix);
       gl.uniform4fv(colorLocation, object.color);
-      // gl.uniform1f(textureLocation, object.texture);
       gl.drawArrays(gl.TRIANGLES, 0, object.mesh.vertexCount);
     }
 
@@ -284,6 +281,7 @@ export function createRenderer2D(canvas) {
     scene.push(...objects);
   }
 
+  // resize canvas sesuai ukuran display
   function resizeCanvasToDisplaySize() {
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
     const displayWidth = Math.max(1, Math.round(canvas.clientWidth * pixelRatio));
@@ -309,6 +307,7 @@ export function createRenderer2D(canvas) {
     for (const object of scene) drawObject(object, aspectCorrection);
   }
 
+  // fungsi untuk memulai animasi
   function start(update = () => {}) {
     let startedAt = performance.now();
     let lastTime = startedAt;

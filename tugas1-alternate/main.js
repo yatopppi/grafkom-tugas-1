@@ -112,12 +112,13 @@ const rocketBody = createOutlinedPolygon({
   fillColor: COLORS.white, innerScaleX: 0.94, innerScaleY: 0.965,
   points: [[-0.19, 0.63], [-0.36, 0.28], [-0.44, -0.34], [-0.30, -0.68], [0.30, -0.68], [0.44, -0.34], [0.36, 0.28], [0.19, 0.63]],
 });
-
+// ujung roket
 const rocketNose = createOutlinedPolygon({
   x: 0, y: 0.65, fillColor: COLORS.red, innerScaleX: 0.88, innerScaleY: 0.87,
   points: [[0.00, 0.27], [-0.24, -0.1], [0.24, -0.1]],
 });
 
+// jendela roket
 const rocketWindow = renderer.group({ x: 0, y: 0.18 });
 
 rocketWindow.add(
@@ -128,12 +129,14 @@ rocketWindow.add(
   renderer.arc({ x: -0.015, y: 0.01, radiusX: 0.095, radiusY: 0.095, thickness: 0.012, startAngle: 105, endAngle: 145, color: COLORS.white})
 );
 
+// sirip tengah roket
 const centerFin = renderer.group({ x: 0, y: -0.5, rotation: 0 });
 centerFin.add(
   renderer.ellipse({ radiusX: 0.065, radiusY: 0.25, color: COLORS.black}),
   renderer.ellipse({ radiusX: 0.040, radiusY: 0.215, color: COLORS.red })
 );
 
+// sabuk roket
 const rocketBand = createOutlinedPolygon({
   x: 0, y: -0.75, fillColor: COLORS.highBlue, innerScaleX: 0.88, innerScaleY: 0.72,
   points: [[-0.31, 0.09], [0.31, 0.09], [0.23, -0.09], [-0.23, -0.09]],
@@ -141,7 +144,6 @@ const rocketBand = createOutlinedPolygon({
 
 // group semua object untuk jadi roket
 rocket.add(leftFin, rightFin, flameLeft, flameCenter, flameRight, rocketBody, rocketNose, rocketWindow, rocketBand, centerFin);
-// rocket.add(leftFin);
 renderer.add(...stars, rocket, planetBiru, planetOranye);
 
 // animation
@@ -165,7 +167,6 @@ const ctrl = renderer.start((t) => {
   planetOranye.rotation = 15 + 3 * Math.sin(t * 0.6 + 1.5);
 });
 
-// window.addEventListener("resize", () => renderer.render());
 
 // event listener
 window.addEventListener("keydown", (event) => {
