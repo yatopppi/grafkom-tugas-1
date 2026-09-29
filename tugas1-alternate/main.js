@@ -136,22 +136,45 @@ rocket.add(leftFin, rightFin, flameLeft, flameCenter, flameRight, rocketBody, ro
 
 
 renderer.add(...stars, rocket, planetBiru, planetOranye);
-renderer.render();
+const ctrl = renderer.start((t) => {
+  rocket.x = 0.12 * Math.sin(t * 0.8);
+  rocket.y = 0.13 + 0.08 * Math.cos(t * 1.3);
+  rocket.rotation = 5 * Math.sin(t * 0.9);
+
+  flameLeft.scaleY = 1 + 0.18 * Math.sin(t * 8);
+  flameCenter.scaleY = 1 + 0.24 * Math.sin(t * 10 + 1);
+  flameRight.scaleY = 1 + 0.18 * Math.sin(t * 9 + 2);
+
+  stars.forEach((star, i) => {
+    star.rotation = STAR_DATA[i].rotation + 15 * Math.sin(t + i);
+    const pulse = 1 + 0.12 * Math.sin(t * 2.5 + i * 1.4);
+    star.scaleX = STAR_DATA[i].scaleX * pulse;
+    star.scaleY = STAR_DATA[i].scaleY * pulse;
+  });
+
+  planetBiru.rotation = 18 + 4 * Math.sin(t * 0.7);
+  planetOranye.rotation = 15 + 3 * Math.sin(t * 0.6 + 1.5);
+});
 
 // window.addEventListener("resize", () => renderer.render());
 
-// function resetScene() {
-//   STAR_DATA.forEach((data, index) => {
-//     Object.assign(stars[index], { x: data.x, y: data.y, rotation: data.rotation, scaleX: data.scaleX, scaleY: data.scaleY });
-//   });
-//   Object.assign(planetBiru, { x: -0.58, y: -1.19, rotation: 18 });
-//   Object.assign(planetOranye, { x: 0.54, y: -1.35, rotation: 15 });
-//   renderer.render();
-// }
-
 window.addEventListener("keydown", (event) => {
   if (event.key.toLowerCase() === "r" && !event.repeat) {
-    // resetScene();
+    ctrl.reset();
+  }
+});
+
+let active = true;
+
+window.addEventListener("keydown", (event) => {
+  if (event.key.toLowerCase() === "s" && !event.repeat) {
+    if (active) {
+      ctrl.stop();
+      active = false;
+    } else {
+      ctrl.start();
+      active = true;
+    }
   }
 });
 

@@ -302,6 +302,12 @@ export function createRenderer2D(canvas) {
           animationFrameId = null;
         }
       },
+      start() {
+        if (animationFrameId === null) {
+          lastTime = performance.now();
+          animationFrameId = requestAnimationFrame(frame);
+        }
+      },
     };
   }
 
