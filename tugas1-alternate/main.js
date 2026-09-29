@@ -24,7 +24,7 @@ const STAR_DATA = [
   { type: "star", x: 0.82, y: 0.58, radius: 0.13, rotation: 88, scaleX: 0.96, scaleY: 1.0, color: COLORS.yellow },
 ];
 
-function createOutlinedStar({ type, x, y, radius, radiusOutline, rotation, scaleX, scaleY, color }) {
+function createOutlinedStar({ type, x, y, radius, rotation, scaleX, scaleY, color }) {
   const starGroup = renderer.group({ x, y, rotation, scaleX, scaleY });
   const createStar = type === "star4" ? renderer.star4 : renderer.star;
   starGroup.add(
@@ -132,8 +132,6 @@ const rocketBand = createOutlinedPolygon({
 });
 
 rocket.add(leftFin, rightFin, flameLeft, flameCenter, flameRight, rocketBody, rocketNose, rocketWindow, rocketBand, centerFin);
-// rocket.add(leftFin);
-
 
 renderer.add(...stars, rocket, planetBiru, planetOranye);
 const ctrl = renderer.start((t) => {
@@ -155,8 +153,6 @@ const ctrl = renderer.start((t) => {
   planetBiru.rotation = 18 + 4 * Math.sin(t * 0.7);
   planetOranye.rotation = 15 + 3 * Math.sin(t * 0.6 + 1.5);
 });
-
-// window.addEventListener("resize", () => renderer.render());
 
 window.addEventListener("keydown", (event) => {
   if (event.key.toLowerCase() === "r" && !event.repeat) {
