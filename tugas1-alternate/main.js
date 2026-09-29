@@ -1,8 +1,10 @@
 import { createRenderer2D } from "./renderer2d.js";
 
+// manggil object" untuk dirender
 const canvas = document.getElementById("glCanvas");
 const renderer = createRenderer2D(canvas);
 
+// alias untuk warna agar mudah dipakai ulang
 const COLORS = {
   black: [0.08, 0.075, 0.065, 1],
   yellow: [1.0, 0.93, 0.02, 1],
@@ -17,6 +19,7 @@ const COLORS = {
   gray: [0.8, 0.8, 0.8, 1],
 };
 
+// ukuran dan bentuk bintang kita variasikan dan simpan dlm array
 const STAR_DATA = [
   { type: "star4", x: -0.37, y: 1.19, radius: 0.12, rotation: 0, scaleX: 0.95, scaleY: 1.08, color: COLORS.yellow },
   { type: "star", x: 0.67, y: 1.29, radius: 0.18, rotation: 82, scaleX: 0.94, scaleY: 1.05, color: COLORS.cyan },
@@ -24,7 +27,8 @@ const STAR_DATA = [
   { type: "star", x: 0.82, y: 0.58, radius: 0.13, rotation: 88, scaleX: 0.96, scaleY: 1.0, color: COLORS.yellow },
 ];
 
-function createOutlinedStar({ type, x, y, radius, rotation, scaleX, scaleY, color }) {
+// create object star dengan outline, disini kami menggunakan group 
+function createOutlinedStar({ type, x, y, radius, radiusOutline, rotation, scaleX, scaleY, color }) {
   const starGroup = renderer.group({ x, y, rotation, scaleX, scaleY });
   const createStar = type === "star4" ? renderer.star4 : renderer.star;
   starGroup.add(
@@ -36,6 +40,7 @@ function createOutlinedStar({ type, x, y, radius, rotation, scaleX, scaleY, colo
 
 const stars = STAR_DATA.map(createOutlinedStar);
 
+// object planet biru
 const planetBiru = renderer.group({ x: -0.58, y: -1.19, rotation: 18 });
 planetBiru.add(
   renderer.ring({ radiusX: 0.34, radiusY: 0.105, thickness: 0.045, color: COLORS.black}),
@@ -50,6 +55,7 @@ planetBiru.add(
   renderer.arc({ radiusX: 0.34, radiusY: 0.105, thickness: 0.023, startAngle: 188, endAngle: 354, color: COLORS.red})
 );
 
+// objek planet oren
 const planetOranye = renderer.group({ x: 0.54, y: -1.35, rotation: 15 });
 planetOranye.add(
   renderer.ring({ radiusX: 0.34, radiusY: 0.10, thickness: 0.044, color: COLORS.black}),
@@ -85,6 +91,7 @@ function createOutlinedTriangle({ x, y, width, height, rotation, fillColor }) {
   return group;
 }
 
+// objek roket
 const rocket = renderer.group({ x: 0, y: 0.13, rotation: 0 });
 
 const leftFin = createOutlinedPolygon({
@@ -96,11 +103,11 @@ const rightFin = createOutlinedPolygon({
   x: 0.40, y: -0.5, fillColor: COLORS.red, innerScaleX: 0.90, innerScaleY: 0.88,
   points: [[-0.14, 0.6], [0.15, 0.16], [0.2, -0.05], [0.14, -0.3], [-0.14, -0.05]],
 });
-
+// api roket
 const flameLeft = createOutlinedTriangle({ x: -0.16, y: -0.96, width: 0.23, height: 0.40, rotation: 170, fillColor: COLORS.yellow });
 const flameCenter = createOutlinedTriangle({ x: 0, y: -0.96, width: 0.25, height: 0.48, rotation: 180, fillColor: COLORS.yellow });
 const flameRight = createOutlinedTriangle({ x: 0.16, y: -0.96, width: 0.23, height: 0.40, rotation: 190, fillColor: COLORS.yellow });
-
+// badan roket
 const rocketBody = createOutlinedPolygon({
   fillColor: COLORS.white, innerScaleX: 0.94, innerScaleY: 0.965,
   points: [[-0.19, 0.63], [-0.36, 0.28], [-0.44, -0.34], [-0.30, -0.68], [0.30, -0.68], [0.44, -0.34], [0.36, 0.28], [0.19, 0.63]],
@@ -112,6 +119,7 @@ const rocketNose = createOutlinedPolygon({
 });
 
 const rocketWindow = renderer.group({ x: 0, y: 0.18 });
+
 rocketWindow.add(
   renderer.circle({ radius: 0.215, color: COLORS.black}),
   renderer.circle({ radius: 0.183, color: COLORS.gray}),
@@ -131,9 +139,12 @@ const rocketBand = createOutlinedPolygon({
   points: [[-0.31, 0.09], [0.31, 0.09], [0.23, -0.09], [-0.23, -0.09]],
 });
 
+// group semua object untuk jadi roket
 rocket.add(leftFin, rightFin, flameLeft, flameCenter, flameRight, rocketBody, rocketNose, rocketWindow, rocketBand, centerFin);
-
+// rocket.add(leftFin);
 renderer.add(...stars, rocket, planetBiru, planetOranye);
+
+// animation
 const ctrl = renderer.start((t) => {
   rocket.x = 0.12 * Math.sin(t * 0.8);
   rocket.y = 0.13 + 0.08 * Math.cos(t * 1.3);
@@ -154,6 +165,9 @@ const ctrl = renderer.start((t) => {
   planetOranye.rotation = 15 + 3 * Math.sin(t * 0.6 + 1.5);
 });
 
+// window.addEventListener("resize", () => renderer.render());
+
+// event listener
 window.addEventListener("keydown", (event) => {
   if (event.key.toLowerCase() === "r" && !event.repeat) {
     ctrl.reset();

@@ -74,6 +74,8 @@ export function createRenderer2D(canvas) {
   const colorLocation = gl.getUniformLocation(program, "u_color");
   // const textureLocation = gl.getUniformLocation(program, "u_texture");
 
+
+  // function buat mesh secara umum
   function createMesh(positions) {
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -81,44 +83,70 @@ export function createRenderer2D(canvas) {
     return { buffer, vertexCount: positions.length / 2 };
   }
 
+  // mesh untuk lingkaran, membagi lingkaran menjadi beberapa segment(titik)
   function createCircleMesh(segments = 64) {
     const positions = [];
     for (let index = 0; index < segments; index++) {
+
       const angleA = (index / segments) * Math.PI * 2;
       const angleB = ((index + 1) / segments) * Math.PI * 2;
-      positions.push(0, 0, Math.cos(angleA), Math.sin(angleA), Math.cos(angleB), Math.sin(angleB));
+
+      positions.push(
+        0, 0, 
+        Math.cos(angleA), Math.sin(angleA), 
+        Math.cos(angleB), Math.sin(angleB)
+      );
     }
     return createMesh(new Float32Array(positions));
   }
 
+  // membuat star mesh
   function createStarMesh(pointCount, innerRadius = 0.42) {
     const positions = [];
     const totalPoints = pointCount * 2;
+
     for (let index = 0; index < totalPoints; index++) {
+
       const angleA = (index / totalPoints) * Math.PI * 2;
       const angleB = ((index + 1) / totalPoints) * Math.PI * 2;
       const radiusA = index % 2 === 0 ? 1 : innerRadius;
       const radiusB = (index + 1) % 2 === 0 ? 1 : innerRadius;
-      positions.push(0, 0, Math.cos(angleA) * radiusA, Math.sin(angleA) * radiusA, Math.cos(angleB) * radiusB, Math.sin(angleB) * radiusB);
+
+      positions.push(
+        0, 0, 
+        Math.cos(angleA) * radiusA, Math.sin(angleA) * radiusA, 
+        Math.cos(angleB) * radiusB, Math.sin(angleB) * radiusB
+      );
     }
     return createMesh(new Float32Array(positions));
   }
 
+  // poligon untuk bentuk kompleks
   function createPolygonMesh(points) {
     if (!Array.isArray(points) || points.length < 3) throw new Error("Polygon minimal memiliki 3 titik.");
     const positions = [];
     let cx = 0, cy = 0;
     
-    for (const [x, y] of points) { cx += x; cy += y; }
-    cx /= points.length; cy /= points.length;
+    for (const [x, y] of points) { 
+      cx += x; 
+      cy += y; 
+    }
+
+    cx /= points.length; 
+    cy /= points.length;
 
     for (let i = 0; i < points.length; i++) {
       const current = points[i], next = points[(i + 1) % points.length];
-      positions.push(cx, cy, current[0], current[1], next[0], next[1]);
+
+      positions.push(
+        cx, cy, 
+        current[0], current[1], 
+        next[0], next[1]);
     }
     return createMesh(new Float32Array(positions));
   }
 
+  // sebagai alat bantu garis
   function createArcMesh({ radiusX, radiusY, thickness, startAngle, endAngle, segments }) {
     const positions = [];
     const start = degToRad(startAngle), end = degToRad(endAngle);
@@ -142,10 +170,12 @@ export function createRenderer2D(canvas) {
     return createMesh(new Float32Array(positions));
   }
 
+  // messh dalam local coordnate
   const squareMesh = createMesh(new Float32Array([
     -0.5, -0.5,  
     0.5, -0.5,  
     0.5,  0.5,
+    
     -0.5, -0.5,  
     0.5,  0.5, 
     -0.5,  0.5,
@@ -163,10 +193,13 @@ export function createRenderer2D(canvas) {
   const arcMeshCache = new Map();
   const scene = [];
 
+
+  // create object in general
   function createObject(mesh, { x = 0, y = 0, scaleX = 1, scaleY = 1, rotation = 0, color = [1, 1, 1, 1] } = {}) {
     return { mesh, x, y, scaleX, scaleY, rotation, color: new Float32Array(color)};
   }
 
+// group function untuk mengelompokkan object
   function group({ x = 0, y = 0, rotation = 0, scaleX = 1, scaleY = 1 } = {}) {
     const children = [];
     return {
@@ -220,6 +253,7 @@ export function createRenderer2D(canvas) {
     return arc({ x, y, radiusX, radiusY, thickness, startAngle: 0, endAngle: 360, rotation, color, segments });
   }
 
+  // mengolah TRS matrix
   function createModelMatrix(object) {
     const translation = Mat3.translation(object.x, object.y);
     const rotation = Mat3.rotation(degToRad(object.rotation));
@@ -261,6 +295,7 @@ export function createRenderer2D(canvas) {
     }
   }
 
+  // fungsi renderer objek yang dipanggil (tersimpan dalam shame)
   function render() {
     resizeCanvasToDisplaySize();
     gl.viewport(0, 0, canvas.width, canvas.height);
