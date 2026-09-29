@@ -84,9 +84,15 @@ export function createRenderer2D(canvas) {
   function createCircleMesh(segments = 64) {
     const positions = [];
     for (let index = 0; index < segments; index++) {
+
       const angleA = (index / segments) * Math.PI * 2;
       const angleB = ((index + 1) / segments) * Math.PI * 2;
-      positions.push(0, 0, Math.cos(angleA), Math.sin(angleA), Math.cos(angleB), Math.sin(angleB));
+
+      positions.push(
+        0, 0, 
+        Math.cos(angleA), Math.sin(angleA), 
+        Math.cos(angleB), Math.sin(angleB)
+      );
     }
     return createMesh(new Float32Array(positions));
   }
@@ -94,12 +100,19 @@ export function createRenderer2D(canvas) {
   function createStarMesh(pointCount, innerRadius = 0.42) {
     const positions = [];
     const totalPoints = pointCount * 2;
+
     for (let index = 0; index < totalPoints; index++) {
+
       const angleA = (index / totalPoints) * Math.PI * 2;
       const angleB = ((index + 1) / totalPoints) * Math.PI * 2;
       const radiusA = index % 2 === 0 ? 1 : innerRadius;
       const radiusB = (index + 1) % 2 === 0 ? 1 : innerRadius;
-      positions.push(0, 0, Math.cos(angleA) * radiusA, Math.sin(angleA) * radiusA, Math.cos(angleB) * radiusB, Math.sin(angleB) * radiusB);
+
+      positions.push(
+        0, 0, 
+        Math.cos(angleA) * radiusA, Math.sin(angleA) * radiusA, 
+        Math.cos(angleB) * radiusB, Math.sin(angleB) * radiusB
+      );
     }
     return createMesh(new Float32Array(positions));
   }
@@ -109,12 +122,21 @@ export function createRenderer2D(canvas) {
     const positions = [];
     let cx = 0, cy = 0;
     
-    for (const [x, y] of points) { cx += x; cy += y; }
-    cx /= points.length; cy /= points.length;
+    for (const [x, y] of points) { 
+      cx += x; 
+      cy += y; 
+    }
+
+    cx /= points.length; 
+    cy /= points.length;
 
     for (let i = 0; i < points.length; i++) {
       const current = points[i], next = points[(i + 1) % points.length];
-      positions.push(cx, cy, current[0], current[1], next[0], next[1]);
+
+      positions.push(
+        cx, cy, 
+        current[0], current[1], 
+        next[0], next[1]);
     }
     return createMesh(new Float32Array(positions));
   }
@@ -146,6 +168,7 @@ export function createRenderer2D(canvas) {
     -0.5, -0.5,  
     0.5, -0.5,  
     0.5,  0.5,
+    
     -0.5, -0.5,  
     0.5,  0.5, 
     -0.5,  0.5,
